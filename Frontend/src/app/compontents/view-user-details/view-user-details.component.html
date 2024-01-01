@@ -1,0 +1,55 @@
+<div class="container-xxl mb-5 p-5">
+  <div class="align-self-center d-flex justify-content-center" *ngIf="pendingUserDetail">
+    <div [ngClass]="pendingUserDetail.status.status==='Approval' ? 'card border-success mb-3':'card border-danger mb-3'" style="width: 30rem">
+      
+      <div class="card-header">{{ pendingUserDetail.name }}</div>
+      <div class="card-body text-dark">
+        <h2 class="card-title">{{ pendingUserDetail.status.status }} Details</h2>
+        <div class="row g-3 align-items-center p-2">
+          <div class="col-6">
+            <label for="inputPassword6" class="col-form-label">Name</label>
+          </div>
+          <div class="col-6">
+            <label for="inputPassword6" class="col-form-label">{{pendingUserDetail.name}}</label>
+          </div>
+          <div class="col-6">
+            <label for="inputPassword6" class="col-form-label">Gmail</label>
+          </div>
+          <div class="col-6">
+            <label for="inputPassword6" class="col-form-label">{{pendingUserDetail.gmail}}</label>
+          </div>
+          <div class="col-6">
+            <label for="inputPassword6" class="col-form-label">Phone No</label>
+          </div>
+          <div class="col-6">
+            <label for="inputPassword6" class="col-form-label">{{pendingUserDetail.phoneNo}}</label>
+          </div>
+          <div class="col-6">
+            <label for="inputPassword6" class="col-form-label">Create On</label>
+          </div>
+          <div class="col-6">
+            <label for="inputPassword6" class="col-form-label">{{pendingUserDetail.createdOn}}</label>
+          </div>
+          <div class="col-6">
+            <label for="inputPassword6" class="col-form-label">LastModify On</label>
+          </div>
+          <div class="col-6">
+            <label for="inputPassword6" class="col-form-label">{{pendingUserDetail.updateOn}}</label>
+          </div>
+          <div class="col-6">
+            <label for="inputPassword6" class="col-form-label">Status</label>
+          </div>
+          <div class="col-6">
+            <label for="inputPassword6" class="col-form-label">{{pendingUserDetail.status.status}}</label>
+          </div>
+          <div class="col-6">
+            <label for="inputPassword6" class="col-form-label">Status Message</label>
+          </div>
+          <div class="col-6">
+            <label for="inputPassword6" class="col-form-label">{{pendingUserDetail.status.statusMessage}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<div class="card my-5 p-2">
+  <div class="card-header">Featured</div>
+  <div class="card-body">
+    <h5 class="card-title">Special title treatment</h5>
+    <table class="table table-bordered table-striped table-hover text-center">
+      <thead>
+        <tr>
+          <th scope="col">S.No</th>
+          <th scope="col">Name</th>
+          <th scope="col">Gmail</th>
+          <th scope="col">Phone No</th>
+          <th scope="col">Company Name</th>
+          <th scope="col">Create Date</th>
+          <th scope="col">LastModify Date</th>
+          <th scope="col">Status</th>
+          <th scope="col">Approval</th>
+          <th scope="col">Denied</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pending of pendingResponseModal; index as i">
+          <th scope="row" [routerLink]="['/details/pending/'+pending.status.statusId]">{{ i + 1 }}</th>
+          <td [routerLink]="['/details/pending/'+pending.status.statusId]">{{ pending.name }}</td>
+          <td [routerLink]="['/details/pending/'+pending.status.statusId]">{{ pending.gmail }}</td>
+          <td [routerLink]="['/details/pending/'+pending.status.statusId]">{{ pending.phoneNo }}</td>
+          <td [routerLink]="['/details/pending/'+pending.status.statusId]">{{ pending.companyName }}</td>
+          <td [routerLink]="['/details/pending/'+pending.status.statusId]">{{ pending.createdOn }}</td>
+          <td [routerLink]="['/details/pending/'+pending.status.statusId]">{{ pending.updateOn }}</td>
+          <td>
+            <span [ngClass]="getClass(pending.status.status)" #pendingStatus>{{
+              statuText
+            }}</span>
+          </td>
+          <td>
+            <button
+              type="button"
+              #appvlbtn
+              [disabled]="pending.status.status === 'Approval'"
+              (click)="handleApproval(i, pending.userId)"
+              class="btn btn-success"
+            >
+              Approval
+            </button>
+          </td>
+          <td>
+            <button
+              type="button"
+              #dendlbtn
+              [disabled]="pending.status.status === 'Denied'"
+              (click)="handleDenied(i, pending.status.statusId)"
+              class="btn btn-danger"
+            >
+              Denied
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<app-status-dialog-box [pendingStatusElementRef]="statusElementRef" [pendingBtnElementRef]="btnElementRef"></app-status-dialog-box>

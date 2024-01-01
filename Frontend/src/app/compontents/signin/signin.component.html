@@ -1,0 +1,171 @@
+<section>
+  <div class="container">
+    <div class="row p-5 my-5 justify-content-center">
+      <div class="col-md-7 col-lg-5">
+        <div class="login-wrap p-4 p-md-5">
+          <div class="icon d-flex align-items-center justify-content-center">
+            <i class="fas fa-user"></i>
+          </div>
+          <h3 class="text-center mb-4">Accept Sign Up</h3>
+          <form
+            [formGroup]="signupFormGroup"
+            class="login-form"
+            (ngSubmit)="signUpHandler()"
+          >
+            <div class="form-group">
+              <input
+                style="height: 52px"
+                type="email"
+                class="form-control"
+                placeholder="Gmail"
+                formControlName="email"
+                aria-describedby="emailHelp"
+                required
+              />
+              <div *ngIf="email.touched">
+                <div
+                  *ngIf="email.errors?.['required']"
+                  id="emailHelp"
+                  class="form-text text-danger"
+                >
+                  Gmail is <b>required</b>
+                </div>
+                <div
+                  *ngIf="
+                    email.errors?.['email'] || email.errors?.['serverError']
+                  "
+                  id="emailHelp"
+                  class="form-text text-danger"
+                >
+                  Please, enter a valid email address
+                </div>
+                <div
+                  *ngIf="
+                    email.errors?.['gmailAuthMatch'] || email.errors?.['serverError']
+                  "
+                  id="emailHelp"
+                  class="form-text text-danger"
+                >
+                  <b>{{ email.value }}</b> is not valid email address
+                </div>
+                <div
+                  *ngIf="
+                    email.errors?.['isEmailExists'] || email.errors?.['serverError']   
+                  "
+                  id="emailHelp"
+                  class="form-text text-danger"
+                >
+                  Already Exists email address
+                </div>
+              </div>
+            </div>
+            <ng-container formGroupName="passwordValidator">
+              <div class="form-group">
+                <input
+                  style="height: 52px"
+                  type="password"
+                  class="form-control"
+                  placeholder="Password"
+                  formControlName="password"
+                  aria-describedby="passwordHelp"
+                  required
+                />
+                <div *ngIf="password.touched">
+                  <div
+                    *ngIf="password.errors?.['required']"
+                    id="passwordHelp"
+                    class="form-text text-danger"
+                  >
+                    Password is <b>required</b>
+                  </div>
+                  <div
+                    *ngIf="password.errors?.['minlength']"
+                    id="passwordHelp"
+                    class="form-text text-danger"
+                  >
+                    Password must be atleast 6 characters long
+                  </div>
+                  <div
+                    *ngIf="password.errors?.['maxlength']"
+                    id="passwordHelp"
+                    class="form-text text-danger"
+                  >
+                    Password must be 32 characters long
+                  </div>
+                  <div
+                    *ngIf="password.errors?.['serverError']"
+                    id="passwordHelp"
+                    class="form-text text-danger"
+                  >
+                    Password has to be alpha numeric and must include uppercase,
+                    lowercase, and special characters
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <input
+                  style="height: 52px"
+                  type="password"
+                  class="form-control"
+                  placeholder="Confirm Password"
+                  formControlName="confirmPassword"
+                  aria-describedby="cnfmpasswordHelp"
+                  required
+                />
+                <div *ngIf="confirmPassword.touched">
+                  <div
+                    *ngIf="confirmPassword.errors?.['required']"
+                    id="cnfmpasswordHelp"
+                    class="form-text text-danger"
+                  >
+                    Confirm Password is <b>required</b>
+                  </div>
+                  <div
+                    *ngIf="passwordFormGroup.errors?.['passwordMissMatch']"
+                    id="cnfmpasswordHelp"
+                    class="form-text text-danger"
+                  >
+                    Password did not match
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <div class="form-group">
+              <select
+                style="height: 52px"
+                class="form-select"
+                aria-label="Default select example"
+                formControlName="role"
+                aria-describedby="roleHelp"
+                required
+              >
+                <option selected value="">Select your Role</option>
+                <option value="USER">User</option>
+                <option value="ADMIN">Admin</option>
+              </select>
+              <div *ngIf="role.touched">
+                <div
+                  *ngIf="role.errors?.['required']"
+                  id="roleHelp"
+                  class="form-text text-danger"
+                >
+                  Role is <b>required</b>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <button
+                type="submit"
+                class="form-control btn btn-primary rounded submit px-3"
+                [disabled]="!signupFormGroup.valid"
+              >
+                Sign Up
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<app-signup-dialog [signUpMessage]="signUpDialogMessage" ></app-signup-dialog>

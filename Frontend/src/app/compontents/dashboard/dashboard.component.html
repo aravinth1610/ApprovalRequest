@@ -1,0 +1,37 @@
+<div class="card my-5 p-2">
+    <div class="card-header">Featured</div>
+    <div class="card-body">
+      <h5 class="card-title">Special title treatment</h5>
+      <table class="table table-bordered table-striped table-hover text-center">
+        <thead>
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Name</th>
+            <th scope="col">Gmail</th>
+            <th scope="col">Phone No</th>
+            <th scope="col">Company Name</th>
+            <th scope="col">Create Date</th>
+            <th scope="col">LastModify Date</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let dashboar of dashboardResponseModal; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ dashboar.name }}</td>
+            <td>{{ dashboar.gmail }}</td>
+            <td>{{ dashboar.phoneNo }}</td>
+            <td>{{ dashboar.companyName }}</td>
+            <td>{{ dashboar.createdOn }}</td>
+            <td>{{ dashboar.updateOn }}</td>
+            <td>
+              <span [ngClass]="getClass(dashboar.status)">{{
+                statuText
+              }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
