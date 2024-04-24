@@ -9,9 +9,12 @@ import org.springframework.stereotype.Indexed;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.signin.request.payload.response.JustTestJoinQueryModal;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.ColumnResult;
+import jakarta.persistence.ConstructorResult;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +23,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.SqlResultSetMapping;
 import jakarta.persistence.Table;
 
 @Entity
@@ -168,6 +172,5 @@ public class User {
 		this.updateOn = updateOn;
 		this.status = status;
 	}
-	
 
 }

@@ -2,9 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { OAuthService } from 'angular-oauth2-oidc';
 import { Subscription } from 'rxjs';
 import { AuthStorageService } from 'src/app/auth/auth-storage.service';
 import { AppConstant } from 'src/app/constants/app-constant';
+import { authConfig } from 'src/app/constants/auth-config';
 import { SignInRequest } from 'src/app/requestPayload/sign-in-request';
 import { UserService } from 'src/app/services/user.service';
 import { ToasterService } from 'src/app/toasters/toaster.service';
@@ -23,11 +25,26 @@ export class LoginComponent implements OnInit, OnDestroy {
     private readonly userServices: UserService,
     private readonly toast: ToasterService,
     private readonly route: Router,
-    private readonly authStorageService: AuthStorageService
+    private readonly authStorageService: AuthStorageService,
+    private readonly OauthService: OAuthService
   ) {
+    this.OauthKeycloakConfigure();
     if (this.authStorageService.isUserLoggedIn()) {
       this.route.navigate(['/dashboard']);
     }
+  }
+
+  keyClockLogin() {
+    this.OauthService.initCodeFlow();
+  }
+
+  keyClockLogout() {
+    this.OauthService.logOut();
+  }
+
+  private OauthKeycloakConfigure() {
+    this.OauthService.configure(authConfig);
+    this.OauthService.loadDiscoveryDocumentAndTryLogin();
   }
 
   ngOnInit(): void {

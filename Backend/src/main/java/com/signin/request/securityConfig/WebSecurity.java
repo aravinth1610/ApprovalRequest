@@ -1,5 +1,7 @@
 package com.signin.request.securityConfig;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,11 +22,11 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import com.signin.request.constant.AppConstant;
 import com.signin.request.filter.CorsConfigurationFilter;
 import com.signin.request.filter.JWTTokenValidatorFilter;
+import com.signin.request.filter.RoleBaseAPIFilter;
 import com.signin.request.gloable.exception.CustomAccessDeniedHandler;
 import com.signin.request.gloable.exception.CustomAuthenticationEntryPoint;
 
 @Configuration
-@EnableWebSecurity
 public class WebSecurity {
 
 	@Autowired
@@ -37,6 +39,9 @@ public class WebSecurity {
 	private CorsConfigurationFilter corsConfigurationFilter;
 	@Autowired
 	private JWTTokenValidatorFilter jwtTokenValidatorFilter;
+	@Autowired
+	private RoleBaseAPIFilter roleBase;
+	
 
 	@Bean
 	protected DaoAuthenticationProvider authenticationProvider() {
@@ -72,11 +77,24 @@ public class WebSecurity {
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authenticationProvider(authenticationProvider())
 				.addFilterBefore(jwtTokenValidatorFilter, BasicAuthenticationFilter.class)
-				.authorizeHttpRequests(
-						(auth) -> auth.requestMatchers(HttpMethod.GET, "/signinrequest/authorization/dashboard")
-								.hasAnyAuthority("USER", "ADMIN").requestMatchers("/signinrequest/authorization/**")
-								.hasAuthority("ADMIN").requestMatchers(AppConstant.PUBLIC_URLS).permitAll().anyRequest()
-								.authenticated())
+				.authorizeHttpRequests(auth -> {
+					this.roleBase.getPermissions().forEach(permission -> {
+						 try {
+						auth.requestMatchers(HttpMethod.valueOf(permission.getMethod()), permission.getEndpoints())
+								.hasAnyAuthority(permission.getRoles().split(","));
+						
+						 } catch (Exception e) {
+		                        throw new RuntimeException("Failed to configure authorization", e);
+		                    }
+					});
+					 auth.requestMatchers(AppConstant.PUBLIC_URLS).permitAll().anyRequest().authenticated();
+// --------------------------------------------------------------------------------------------------------------------				
+//						        auth.requestMatchers(HttpMethod.GET, "/signinrequest/authorization/dashboard")
+//								.hasAnyAuthority("USER", "ADMIN").requestMatchers("/signinrequest/authorization/**")
+//								.hasAuthority("ADMIN").requestMatchers(AppConstant.PUBLIC_URLS).permitAll().anyRequest()
+//								.authenticated();      
+// ------------------------------------------------------------------------------------------------------------------------				
+				})
 				.exceptionHandling(exception -> exception.accessDeniedHandler(accessDeniedHandler)
 						.authenticationEntryPoint(customeAuthEntryPoint))
 				.formLogin(formLogin -> formLogin.disable()).httpBasic(httpBasic -> httpBasic.disable());

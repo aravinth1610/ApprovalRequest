@@ -1,6 +1,9 @@
 package com.signin.request.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -8,15 +11,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.signin.request.entity.RoleBaseApi;
 import com.signin.request.entity.Status;
 import com.signin.request.entity.User;
 import com.signin.request.payload.request.AuthsignUpRequest;
 import com.signin.request.payload.request.OtherSignInRequestPayload;
 import com.signin.request.payload.request.OtherSignUpRequestPayload;
+import com.signin.request.payload.response.JustTestJoinQueryModal;
+import com.signin.request.payload.response.JustTestNonRelationQuery;
+import com.signin.request.repository.RoleBaseApiRepository;
 import com.signin.request.services.OtherUserServices;
 
 import jakarta.validation.Valid;
@@ -27,7 +35,11 @@ public class OtherUserController {
 
 	@Autowired
 	private OtherUserServices otherUserServices;
-
+	
+	@Autowired
+	private RoleBaseApiRepository roleBaseApiRepo;
+	
+	
 	@PostMapping("/other-app/signup")
 	private final ResponseEntity<?> createNewUser(@RequestBody @Valid OtherSignUpRequestPayload otherNewuser) {
 		boolean isCreateNewUser = otherUserServices.createOtherNewUser(otherNewuser);
@@ -52,5 +64,14 @@ public class OtherUserController {
 		}
 
 	}
+	
+	@GetMapping("/other-app/gt")
+	private final ResponseEntity<?> testQueyr() {
+		System.out.println("-----------------");
+		//otherUserServices.testQuery();
+	//	return new ResponseEntity<List<JustTestJoinQueryModal>>(otherUserServices.testJoinQuery(),HttpStatus.OK);
+		return new ResponseEntity<List<JustTestNonRelationQuery>>(otherUserServices.testJoinNonRelationQuery(),HttpStatus.OK);
+	}
+	
 
 }
