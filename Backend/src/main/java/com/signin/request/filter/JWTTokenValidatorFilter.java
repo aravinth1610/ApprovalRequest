@@ -57,7 +57,7 @@ public class JWTTokenValidatorFilter extends OncePerRequestFilter {
 						userDetails, null, userDetails.getAuthorities());
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(authentication);
-System.out.println("fin");
+				System.out.println("fin");
 			} else {
 				System.out.println("e");
 				SecurityContextHolder.clearContext();
@@ -69,6 +69,7 @@ System.out.println("fin");
 
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) {
+		System.out.println(AppConstant.SHOULDNOTFILTERVALIDATOR.contains(request.getServletPath())+"-"+request.getServletPath());
 		return AppConstant.SHOULDNOTFILTERVALIDATOR.contains(request.getServletPath());
 	}
 

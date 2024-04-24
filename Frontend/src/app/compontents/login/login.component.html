@@ -7,6 +7,8 @@
             <i class="fas fa-user"></i>
           </div>
           <h3 class="text-center mb-4">Accept Sign In</h3>
+          <p (click)="keyClockLogin()">keycloak Login</p>
+          <p (click)="keyClockLogout()">keycloak Logout</p>
           <form
             [formGroup]="loginFormGroup"
             class="login-form"

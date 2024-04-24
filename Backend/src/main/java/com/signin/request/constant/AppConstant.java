@@ -32,7 +32,7 @@ public class AppConstant {
 			"Access-Control-Request-Headers", "Cookie"};
 	public static final String[] PUBLIC_URLS = { "/signinrequest/authentication/auth/login",
 			"/signinrequest/authentication/auth/isexists-email", "/signinrequest/authentication/auth/signup",
-			"/signinrequest/authentication/auth/refress-token","/signinrequest/authentication/logout", "/signinrequest/other-app/signup",
+			"/signinrequest/authentication/auth/refress-token","/signinrequest/authentication/logout","/signinrequest/other-app/gt", "/signinrequest/other-app/signup",
 			"/signinrequest/other-app/login", "/images/**", "/uploads/**" };
 
 	public static final List<String> SHOULDNOTFILTERVALIDATOR = Arrays.asList(PUBLIC_URLS);

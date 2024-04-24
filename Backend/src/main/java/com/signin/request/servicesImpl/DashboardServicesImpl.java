@@ -21,6 +21,12 @@ public class DashboardServicesImpl implements DashboardServices {
 
 	@Override
 	public List<DashboardResponseModal> getAllUserDetails() {
+
+		for (DashboardResponseModal d : userRepository.getAllUserDetails()) {
+			System.out.println(d.getStatus());
+		}
+
+		System.out.println();
 		return userRepository.getAllUserDetails();
 	}
 }

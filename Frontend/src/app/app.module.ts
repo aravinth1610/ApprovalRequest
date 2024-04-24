@@ -25,6 +25,7 @@ import { AuthStorageService } from './auth/auth-storage.service';
 import { DashboardService } from './services/dashboard.service';
 import { SignupDialogComponent } from './compontents/dialogBox/signup-dialog/signup-dialog.component';
 import { StatusDialogBoxComponent } from './compontents/dialogBox/status-dialog-box/status-dialog-box.component';
+import { OAuthModule } from 'angular-oauth2-oidc';
 //npm i ng-angular-popup
 //npm install bootstrap@5
 //npm install jquery
@@ -33,6 +34,7 @@ import { StatusDialogBoxComponent } from './compontents/dialogBox/status-dialog-
 //npm i ng-angular-popup(https://www.npmjs.com/package/ng-angular-popup)
 //npm install @auth0/angular-jwt
 //npm install ngx-cookie-service@16.1.0 --save --It ill not work
+//npm i angular-oauth2-oidc --save
 
 @NgModule({
   declarations: [
@@ -57,6 +59,12 @@ import { StatusDialogBoxComponent } from './compontents/dialogBox/status-dialog-
     HttpClientModule,
     ReactiveFormsModule,
     NgToastModule,
+    OAuthModule.forRoot({
+      resourceServer: {
+        allowedUrls: ['http://localhost:8080/api'],
+        sendAccessToken: true
+      }
+    }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ClientInterceptor, multi: true },
